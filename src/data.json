@@ -1,0 +1,90 @@
+{
+  "name": "Sayang",
+  "heroSubtitle": "Wishing you the happiest of birthdays! May this year bring you all the joy and success you deserve.",
+  "heroDate": "April 14, 2026",
+  "birthDate": "2006-04-14",
+  "musicPath": "hbd-sound.mp3",
+  "giftMessage": "Semoga semua yang kamu harapkan tahun ini bisa segera tercapai yaa, aminnn...",
+  "letterSender": "anggaaaaaa",
+  "letterContent": [
+    "Dear Jane,",
+    "Happy Birthday!",
+    "On this special day, I wanted to take a moment to tell you how incredibly amazing you are. You bring so much light and joy into the lives of everyone around you.",
+    "I hope your day is filled with as much happiness as you give to others.",
+    "May all your dreams and wishes come true this year.",
+    "With all my love,",
+    "On this special day, I wanted to take a moment to tell you how incredibly amazing you are. You bring so much light and joy into the lives of everyone around you.",
+    "On this special day, I wanted to take a moment to tell you how incredibly amazing you are. You bring so much light and joy into the lives of everyone around you."
+  ],
+  "puzzle": {
+    "words": [
+      {
+        "answer": "SALSA",
+        "clue": "Nama orang paling cantik",
+        "row": 0,
+        "col": 0,
+        "direction": "across"
+      },
+      {
+        "answer": "ANGGA",
+        "clue": "Nama orang paling ganteng",
+        "row": 0,
+        "col": 1,
+        "direction": "down"
+      },
+      {
+        "answer": "APRIL",
+        "clue": "Bulan apa yaa sekarang?",
+        "row": 0,
+        "col": 4,
+        "direction": "down"
+      },
+      {
+        "answer": "RBLX",
+        "clue": "Singkatan game yang sering kita mainin?",
+        "row": 2,
+        "col": 4,
+        "direction": "across"
+      },
+      {
+        "answer": "LOVE",
+        "clue": "Bahasa inggrisnya cinta?",
+        "row": 2,
+        "col": 6,
+        "direction": "down"
+      }
+    ],
+    "successMessage": "Yeay ❤️"
+  },
+  "galleryVideo": "https://youtu.be/fvjO6XmfByg",
+  "gallery": [
+    {
+      "src": "https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=800&auto=format&fit=crop",
+      "caption": "Tulis ceritamu untuk foto pertama di sini..."
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?q=80&w=800&auto=format&fit=crop",
+      "caption": "Momen indah yang tak terlupakan 🌸"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?q=80&w=800&auto=format&fit=crop",
+      "caption": "Senyum ceria di hari yang spesial."
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=800&auto=format&fit=crop",
+      "caption": "Tawa bahagia yang selalu aku ingat."
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?q=80&w=800&auto=format&fit=crop",
+      "caption": "Pemandangan cantik secantik orangnya ✨"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop",
+      "caption": "Tulis ceritakan kenangan favoritmu di sini..."
+    }
+  ],
+  "heroPhoto": "home-chacha.png",
+  "backgroundPhoto": "PotoBooth.jpeg",
+  "endingMessage": "Thank you for being part of my life. I hope this little website makes you smile.",
+  "endingSender": "I love you so much <3"
+}
