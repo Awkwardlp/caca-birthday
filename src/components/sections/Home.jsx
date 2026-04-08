@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, Heart } from 'lucide-react';
 import data from '../../data.json';
@@ -48,9 +48,69 @@ const FlowerVector = ({ className }) => {
     </svg>
   );
 };
+/* ── Cursor-origin ripple CTA button ──────────────────────────── */
+function RippleCTA({ onClick }) {
+  const btnRef = useRef(null);
+  const [hovered, setHovered] = useState(false);
+  const [origin, setOrigin] = useState({ x: '50%', y: '50%' });
+
+  const capture = (e) => {
+    const rect = btnRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    setOrigin({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  return (
+    <motion.button
+      ref={btnRef}
+      onClick={onClick}
+      whileTap={{ scale: 0.95 }}
+      onMouseEnter={(e) => { capture(e); setHovered(true); }}
+      onMouseLeave={(e) => { capture(e); setHovered(false); }}
+      className="relative overflow-hidden bg-white/15 backdrop-blur-md border border-white/50 px-8 py-4 rounded-full font-bold text-base shadow-lg inline-flex items-center gap-2"
+      style={{ isolation: 'isolate' }}
+    >
+      {/* Dark circle — expands from cursor position */}
+      <span
+        className="absolute rounded-full pointer-events-none"
+        style={{
+          minWidth: '225%',
+          minHeight: '225%',
+          aspectRatio: '1 / 1',
+          left: origin.x,
+          top: origin.y,
+          transform: `translate(-50%, -50%) scale(${hovered ? 1 : 0})`,
+          transition: 'transform 0.5s ease-out',
+          backgroundColor: '#ff39bdff',
+          zIndex: 0,
+        }}
+      />
+      {/* Text + icon — colour transition */}
+      <span
+        className="relative z-10 flex items-center gap-2"
+        style={{
+          color: hovered ? '#ffffffff' : '#ffffffff',
+          transition: 'color 0.3s ease-out',
+        }}
+      >
+        Maulidiya Salsabila
+        <Heart
+          className="w-4 h-4"
+          style={{
+            fill: hovered ? '#ffffffff' : '#ffffffff',
+            color: hovered ? '#ffffffff' : '#ffffffff',
+            transition: 'fill 0.3s ease-out, color 0.3s ease-out',
+          }}
+        />
+      </span>
+    </motion.button>
+  );
+}
+
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
+
 
   useEffect(() => {
     // Touch device = no hover, so show flowers always
@@ -118,7 +178,7 @@ export default function Home() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.4, type: 'spring' }}
-            className="inline-flex items-center gap-2 bg-white/25 backdrop-blur-md px-4 py-2 rounded-full mb-8 border border-white/30 shadow-sm"
+            className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-4 py-2 rounded-full mb-8 border border-white/30 shadow-sm"
           >
             <Sparkles className="w-4 h-4 text-yellow-200" />
             <span className="text-white/90 font-semibold text-sm tracking-widest uppercase">{data.heroDate}</span>
@@ -130,20 +190,12 @@ export default function Home() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg text-white/70 mb-10 max-w-lg mx-auto md:mx-0 leading-relaxed">
+          <p className="text-md text-white/100 mb-10 max-w-lg mx-auto md:mx-0 leading-relaxed">
             {data.heroSubtitle}
           </p>
 
-          {/* CTA Button */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={scrollToGift}
-            className="bg-white/90 text-purple-700 px-8 py-4 rounded-full font-black text-base shadow-lg hover:shadow-xl hover:bg-white transition-all inline-flex items-center gap-2 backdrop-blur-sm"
-          >
-            Maulidiya Salsabila
-            <Heart className="w-4 h-4 fill-pink-500 text-purple-700" />
-          </motion.button>
+          {/* CTA Button — cursor-origin ripple */}
+          <RippleCTA onClick={scrollToGift} />
         </motion.div>
 
         {/* Right — Image */}

@@ -1,133 +1,178 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Home, Gift, Mail, Puzzle, Image } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const navItems = [
-  {
-    name: 'Home',
-    Icon: Home,
-    href: '#home',
-    sectionId: 'home',
-    activeBg: 'bg-pink-400',
-    hoverBg: 'hover:bg-white',
-    activeText: 'text-white',
-    idleText: 'text-white/80',
-    hoverText: 'hover:text-black/50',
-  },
-  {
-    name: 'Gift',
-    Icon: Gift,
-    href: '#gift',
-    sectionId: 'gift',
-    activeBg: 'bg-pink-400',
-    hoverBg: 'hover:bg-white',
-    activeText: 'text-white',
-    idleText: 'text-white/80',
-    hoverText: 'hover:text-black/50',
-  },
-  {
-    name: 'Letter',
-    Icon: Mail,
-    href: '#letter',
-    sectionId: 'letter',
-    activeBg: 'bg-pink-400',
-    hoverBg: 'hover:bg-white',
-    activeText: 'text-white',
-    idleText: 'text-white/80',
-    hoverText: 'hover:text-black/50',
-  },
-  {
-    name: 'Puzzle',
-    Icon: Puzzle,
-    href: '#puzzle',
-    sectionId: 'puzzle',
-    activeBg: 'bg-pink-400',
-    hoverBg: 'hover:bg-white',
-    activeText: 'text-white',
-    idleText: 'text-white/80',
-    hoverText: 'hover:text-black/50',
-  },
-  {
-    name: 'Gallery',
-    Icon: Image,
-    href: '#gallery',
-    sectionId: 'gallery',
-    activeBg: 'bg-pink-400',
-    hoverBg: 'hover:bg-white',
-    activeText: 'text-white',
-    idleText: 'text-white/80',
-    hoverText: 'hover:text-black/50',
-  },
+  { name: 'Home',    href: '#home',    sectionId: 'home'    },
+  { name: 'Gift',    href: '#gift',    sectionId: 'gift'    },
+  { name: 'Letter',  href: '#letter',  sectionId: 'letter'  },
+  { name: 'Puzzle',  href: '#puzzle',  sectionId: 'puzzle'  },
+  { name: 'Gallery', href: '#gallery', sectionId: 'gallery' },
 ];
 
+const TRANSITION = { duration: 0.5, ease: [0.4, 0, 0.2, 1] };
+const SPRING     = { type: 'spring', stiffness: 380, damping: 30 };
+
 export default function Navbar() {
-  const [active, setActive] = useState('home');
+  const [active,  setActive ] = useState('home');
+  const [isAtTop, setIsAtTop] = useState(true);
 
+  /* ── Scroll detection ─────────────────────────────────────────
+   *  Single rAF-throttled listener.
+   *  Active section = last section whose top ≤ 120px from viewport top.
+   *  Works for any section height (fixes Gallery/Puzzle inaccuracy).
+   */
   useEffect(() => {
-    const observers = [];
+    let ticking = false;
 
-    navItems.forEach(({ sectionId }) => {
-      const el = document.getElementById(sectionId);
-      if (!el) return;
+    const detect = () => {
+      setIsAtTop(window.scrollY < 10);
 
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActive(sectionId);
-        },
-        { threshold: 0.35, rootMargin: '-80px 0px 0px 0px' }
-      );
+      let current = navItems[0].sectionId;
+      for (const { sectionId } of navItems) {
+        const el = document.getElementById(sectionId);
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= 120) current = sectionId;
+      }
+      setActive(current);
 
-      observer.observe(el);
-      observers.push(observer);
-    });
+      ticking = false;
+    };
 
-    return () => observers.forEach((o) => o.disconnect());
+    const onScroll = () => {
+      if (!ticking) { requestAnimationFrame(detect); ticking = true; }
+    };
+
+    detect();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   const handleClick = (e, item) => {
     e.preventDefault();
     setActive(item.sectionId);
-    const target = document.getElementById(item.sectionId);
-    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById(item.sectionId)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <motion.nav
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ type: 'spring', stiffness: 100, damping: 20, delay: 0.5 }}
-      className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[80vw] sm:w-[95vw] max-w-lg"
+    <div
+      className="fixed top-0 left-0 right-0 z-50 flex justify-center"
+      style={{ pointerEvents: 'none' }}
     >
-      <div className="bg-white/25 backdrop-blur-xl shadow-2xl shadow-black-500/20 border border-white/50 rounded-full px-2 py-2 flex items-center justify-between gap-2">
-        {navItems.map((item) => {
-          const isActive = active === item.sectionId;
-          const { Icon } = item;
-
-          return (
-            <motion.a
-              key={item.href}
-              href={item.href}
-              onClick={(e) => handleClick(e, item)}
-              whileTap={{ scale: 0.88 }}
-              title={item.name}
-              className={[
-                'flex-1 flex flex-col items-center justify-center gap-0.5 rounded-full transition-all duration-300 select-none py-2 px-1',
-                isActive
-                  ? `${item.activeBg} ${item.activeText} shadow-md`
-                  : `${item.idleText} ${item.hoverBg} ${item.hoverText}`,
-              ].join(' ')}
+      <motion.nav
+        layout
+        animate={isAtTop ? 'top' : 'scrolled'}
+        variants={{
+          top: {
+            marginTop: 0,
+            borderRadius: 0,
+            backgroundColor: 'rgba(255,255,255,0.15)',
+            backdropFilter: 'blur(20px)',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.18)',
+            borderWidth: 0,
+            borderColor: 'rgba(255,255,255,0)',
+          },
+          scrolled: {
+            marginTop: 16,
+            borderRadius: 9999,
+            backgroundColor: 'rgba(255,255,255,0.25)',
+            backdropFilter: 'blur(20px)',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.18)',
+            borderWidth: 1,
+            borderColor: 'rgba(255,255,255,0.5)',
+          },
+        }}
+        transition={{ layout: TRANSITION, ...TRANSITION }}
+        style={{
+          pointerEvents: 'auto',
+          borderStyle: 'solid',
+          width: isAtTop ? '100%' : undefined,
+        }}
+        className={
+          isAtTop
+            ? 'flex items-center justify-center sm:justify-between px-6 sm:px-10 lg:px-16 py-4 lg:py-5'
+            : 'flex items-center px-4 lg:px-5 py-2 lg:py-2.5'
+        }
+      >
+        {/* mode="wait": old content fades out first, THEN shape morphs, THEN new content fades in */}
+        <AnimatePresence mode="wait" initial={false}>
+          {isAtTop ? (
+            <motion.div
+              key="top-content"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0 } }}
+              transition={{ duration: 0.22, delay: 0.48 }}
+              className="flex items-center justify-center sm:justify-between w-full"
             >
-              {/* Lucide icon — always visible */}
-              <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
-
-              {/* Label — visible on sm and up */}
-              <span className="hidden sm:block text-[9px] font-black uppercase tracking-wider leading-none">
-                {item.name}
+              {/* Logo */}
+              <span className="hidden sm:block text-white font-bold text-sm lg:text-lg uppercase select-none whitespace-nowrap">
+                Maulidiya Salsabila
               </span>
-            </motion.a>
-          );
-        })}
-      </div>
-    </motion.nav>
+
+              {/* Menu — text links */}
+              <ul className="flex items-center gap-1 sm:gap-2 lg:gap-4">
+                {navItems.map((item) => {
+                  const isActive = active === item.sectionId;
+                  return (
+                    <li key={item.href}>
+                      <motion.a
+                        href={item.href}
+                        onClick={(e) => handleClick(e, item)}
+                        whileTap={{ scale: 0.93 }}
+                        className={[
+                          'relative text-[11px] sm:text-[13px] lg:text-[15px] font-semibold tracking-wide select-none transition-colors duration-200 px-3 lg:px-5 py-1.5 lg:py-2',
+                          isActive ? 'text-white' : 'text-white/70 hover:text-white',
+                        ].join(' ')}
+                      >
+                        {item.name}
+                      </motion.a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </motion.div>
+          ) : (
+            /* ── SCROLLED content ── */
+            <motion.div
+              key="scrolled-content"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0 } }}
+              transition={{ duration: 0.22, delay: 0.48 }}
+              className="flex items-center gap-1 lg:gap-2"
+            >
+              {navItems.map((item) => {
+                const isActive = active === item.sectionId;
+                return (
+                  <motion.a
+                    key={item.href}
+                    href={item.href}
+                    onClick={(e) => handleClick(e, item)}
+                    whileTap={{ scale: 0.88 }}
+                    className={[
+                      'relative text-[10px] sm:text-[11px] lg:text-[13px] font-bold uppercase tracking-wider select-none transition-all duration-200 px-3 lg:px-4 py-1.5 lg:py-2 rounded-full whitespace-nowrap',
+                      isActive
+                        ? 'text-white'
+                        : 'text-white/80 hover:bg-white hover:text-black/60',
+                    ].join(' ')}
+                  >
+                    {/* Sliding active pill */}
+                    {isActive && (
+                      <motion.span
+                        layoutId="scrolled-pill"
+                        className="absolute inset-0 rounded-full bg-pink-400 shadow-md"
+                        style={{ zIndex: -1 }}
+                        transition={SPRING}
+                      />
+                    )}
+                    {item.name}
+                  </motion.a>
+                );
+              })}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+    </div>
   );
 }

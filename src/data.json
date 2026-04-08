@@ -3,9 +3,9 @@
   "heroSubtitle": "Wishing you the happiest of birthdays! May this year bring you all the joy and success you deserve.",
   "heroDate": "April 14, 2026",
   "birthDate": "2006-04-14",
-  "musicPath": "hbd-sound.mp3",
+  "musicPath": "romantic-sound.mp3",
   "giftMessage": "Semoga semua yang kamu harapkan tahun ini bisa segera tercapai yaa, aminnn...",
-  "letterSender": "anggaaaaaa",
+  "letterSender": "anggastwn",
   "letterContent": [
     "Dear Jane,",
     "Happy Birthday!",
@@ -20,14 +20,14 @@
     "words": [
       {
         "answer": "SALSA",
-        "clue": "Nama orang paling cantik",
+        "clue": "Nama orang tercantik didunia",
         "row": 0,
         "col": 0,
         "direction": "across"
       },
       {
         "answer": "ANGGA",
-        "clue": "Nama orang paling ganteng",
+        "clue": "Nama orang terganteng didunia",
         "row": 0,
         "col": 1,
         "direction": "down"
@@ -48,7 +48,7 @@
       },
       {
         "answer": "LOVE",
-        "clue": "Bahasa inggrisnya cinta?",
+        "clue": "Ini sih… kamu tau lah 🤍",
         "row": 2,
         "col": 6,
         "direction": "down"
@@ -83,7 +83,7 @@
       "caption": "Tulis ceritakan kenangan favoritmu di sini..."
     }
   ],
-  "heroPhoto": "home-chacha.png",
+  "heroPhoto": "home-caca.png",
   "backgroundPhoto": "PotoBooth.jpeg",
   "endingMessage": "Thank you for being part of my life. I hope this little website makes you smile.",
   "endingSender": "I love you so much <3"

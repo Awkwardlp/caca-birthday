@@ -16,7 +16,7 @@
 @layer base {
   html {
     /* scroll-behavior is handled by Lenis — native smooth scroll disabled to prevent conflict */
-    scroll-behavior: auto;
+    scroll-behavior: smooth;
   }
 
   body {

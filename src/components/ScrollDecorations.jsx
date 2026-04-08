@@ -13,8 +13,8 @@ export default function ScrollDecorations() {
   const ySlowDown2 = useTransform(scrollYProgress, [0, 1], ['0vh', '-10vh']);
   const yMediumUp = useTransform(scrollYProgress, [0, 1], ['0vh', '-80vh']);
 
-  const rotateSlow = useTransform(scrollYProgress, [0, 1], [0, 260]);
-  const rotateReverse = useTransform(scrollYProgress, [0, 1], [0, -260]);
+  const rotateSlow = useTransform(scrollYProgress, [0, 1], [-15, 20]);
+  const rotateReverse = useTransform(scrollYProgress, [0, 1], [15, -20]);
 
   return (
     <>
@@ -52,28 +52,28 @@ export default function ScrollDecorations() {
         {/* Floating Flowers (Parallax Effect) */}
         <motion.div
           style={{ y: yFastUp, rotate: rotateSlow }}
-          className="absolute top-[40%] left-[8%] opacity-30 drop-shadow-xl"
+          className="absolute top-[40%] left-[8%] opacity-100 drop-shadow-xl"
         >
-          <FlowerVector className="w-20 h-20 blur-[1.5px]" />
+          <FlowerVector className="w-20 h-20 blur-[2.5px]" />
         </motion.div>
 
         <motion.div
           style={{ y: yMediumUp, rotate: rotateReverse }}
-          className="absolute top-[70%] right-[10%] opacity-30 drop-shadow-2xl"
+          className="absolute top-[70%] right-[10%] opacity-100 drop-shadow-2xl"
         >
-          <FlowerVector className="w-28 h-28 blur-[1.5px]" />
+          <FlowerVector className="w-28 h-28 blur-[3px]" />
         </motion.div>
 
         <motion.div
           style={{ y: ySlowDown, rotate: rotateSlow }}
-          className="absolute top-[15%] right-[25%] opacity-50"
+          className="absolute top-[15%] right-[25%] opacity-100"
         >
           <FlowerVector className="w-12 h-12 blur-[1.2px]" />
         </motion.div>
 
         <motion.div
           style={{ y: ySlowDown2, rotate: rotateSlow }}
-          className="absolute top-[85%] right-[84%] opacity-50"
+          className="absolute top-[85%] right-[84%] opacity-100"
         >
           <FlowerVector className="w-12 h-12 blur-[1.2px]" />
         </motion.div>

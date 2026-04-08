@@ -80,7 +80,7 @@ export default function Puzzle() {
   };
 
   return (
-    <section id="puzzle" className="py-20 relative overflow-hidden">
+    <section id="puzzle" className="py-25 relative overflow-hidden">
       <Sprinkles set="default" />
       {isSuccess && <Confetti recycle={false} numberOfPieces={600} colors={['#a855f7', '#f472b6', '#fcd34d', '#60a5fa']} />}
 

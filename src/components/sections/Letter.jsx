@@ -76,7 +76,7 @@ function EnvelopeScene({ phase, onOpen }) {
               borderColor: 'transparent rgba(244,114,182,0.12) transparent transparent',
             }} />
             {/* Stamp */}
-            <div style={{
+            {/* <div style={{
               position: 'absolute', top: '12px', right: '14px',
               width: '36px', height: '42px',
               background: 'linear-gradient(135deg, #fde68a, #fbbf24)',
@@ -86,7 +86,7 @@ function EnvelopeScene({ phase, onOpen }) {
               fontSize: '18px',
             }}>
               💌
-            </div>
+            </div> */}
           </div>
 
           {/* ── Flap (rotates open in 3D) ── */}
@@ -209,10 +209,10 @@ function LetterContent() {
           />
         ))}
         {/* Post-it top-right */}
-        <div className="absolute -top-3 -right-3 w-12 h-12 bg-yellow-200/80 shadow-md flex items-center justify-center text-xl"
+        <div className="absolute -top-3 -right-3 w-12 h-12 bg-pink-200/80 shadow-md flex items-center justify-center text-xl"
           style={{ transform: 'rotate(5deg)', borderRadius: '2px 2px 2px 2px', boxShadow: '2px 4px 10px rgba(0,0,0,0.15)' }}
         >
-          💛
+          🩷
         </div>
 
         {/* Content */}
@@ -225,7 +225,7 @@ function LetterContent() {
               transition={{ delay: 0.2 + index * 0.35, duration: 0.6, ease: 'easeOut' }}
               className={
                 index === 0
-                  ? 'text-2xl font-black text-purple-800 mb-6'
+                  ? 'text-2xl font-black text-pink-400 mb-6'
                   : 'text-base md:text-lg text-slate-700 leading-loose mb-4'
               }
             >
