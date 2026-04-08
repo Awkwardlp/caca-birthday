@@ -86,26 +86,11 @@ const useCanvasCursor = () => {
         lines.push(new Line({ spring: 0.4 + (e / E.trails) * 0.025 }));
     }
     function c(e) {
-      if (e.touches) {
-        pos.x = e.touches[0].pageX;
-        pos.y = e.touches[0].pageY;
-      } else {
-        pos.x = e.clientX;
-        pos.y = e.clientY;
-      }
-      e.preventDefault();
-    }
-    function l(e) {
-      if (1 == e.touches.length) {
-        pos.x = e.touches[0].pageX;
-        pos.y = e.touches[0].pageY;
-      }
+      pos.x = e.clientX;
+      pos.y = e.clientY;
     }
     document.removeEventListener('mousemove', onMousemove);
-    document.removeEventListener('touchstart', onMousemove);
     document.addEventListener('mousemove', c);
-    document.addEventListener('touchmove', c, { passive: false });
-    document.addEventListener('touchstart', l);
     c(e);
     o();
     render();
@@ -154,7 +139,15 @@ const useCanvasCursor = () => {
     this.vx = 0;
   }
 
+  // Detect touch/mobile devices — skip cursor effect entirely on touch screens
+  const isTouchDevice = () =>
+    window.matchMedia('(hover: none)').matches ||
+    window.matchMedia('(pointer: coarse)').matches;
+
   const renderCanvas = function () {
+    // Don't run the cursor effect on touch/mobile devices
+    if (isTouchDevice()) return;
+
     ctx = document.getElementById('canvas').getContext('2d');
     ctx.running = true;
     ctx.frame = 1;
@@ -165,7 +158,6 @@ const useCanvasCursor = () => {
       offset: 295,
     });
     document.addEventListener('mousemove', onMousemove);
-    document.addEventListener('touchstart', onMousemove);
     document.body.addEventListener('orientationchange', resizeCanvas);
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('focus', () => {
@@ -183,11 +175,12 @@ const useCanvasCursor = () => {
   useEffect(() => {
     renderCanvas();
     return () => {
-      ctx.running = false;
-      document.removeEventListener('mousemove', onMousemove);
-      document.removeEventListener('touchstart', onMousemove);
-      document.body.removeEventListener('orientationchange', resizeCanvas);
-      window.removeEventListener('resize', resizeCanvas);
+      if (ctx) {
+        ctx.running = false;
+        document.removeEventListener('mousemove', onMousemove);
+        document.body.removeEventListener('orientationchange', resizeCanvas);
+        window.removeEventListener('resize', resizeCanvas);
+      }
     };
   }, []);
 };
