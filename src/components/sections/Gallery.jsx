@@ -53,10 +53,6 @@ function StackCard({ src, caption, index }) {
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: index + 10,
-        willChange: 'transform',
-        transform: 'translateZ(0)',
-        WebkitBackfaceVisibility: 'hidden',
-        contain: 'layout style',
       }}
     >
       <motion.div
@@ -76,7 +72,7 @@ function StackCard({ src, caption, index }) {
           width: 'min(300px, 75vw)',
           aspectRatio: '3/4',
           perspective: 1200,
-          boxShadow: '0 12px 36px rgba(0,0,0,0.08)',
+          boxShadow: `0 ${8 + index * 4}px ${28 + index * 8}px rgba(0,0,0,${0.05 + index * 0.01})`,
         }}
       >
         <motion.div
@@ -94,7 +90,8 @@ function StackCard({ src, caption, index }) {
             <div
               className="absolute -top-3 left-1/2 w-24 h-8 opacity-80 z-20"
               style={{
-                background: 'linear-gradient(45deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.5) 100%)',
+                background: 'linear-gradient(45deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 100%)',
+                backdropFilter: 'blur(4px)',
                 border: '1px solid rgba(255,255,255,0.5)',
                 transform: `translateX(-50%) rotate(${index % 2 === 0 ? '-2deg' : '3deg'})`,
               }}
@@ -103,7 +100,7 @@ function StackCard({ src, caption, index }) {
               <img
                 src={src}
                 alt={`Memory ${index + 1}`}
-                className="w-full h-full object-cover brightness-95"
+                className="w-full h-full object-cover brightness-95 transition-all duration-500"
                 loading="lazy"
               />
             </div>
@@ -227,7 +224,7 @@ export default function Gallery() {
   return (
     <section
       id="gallery"
-      className="relative bg-white/10 backdrop-blur-sm border-t border-white/20"
+      className="relative bg-white/15 border-t border-white/20"
       style={{ overflowX: 'clip' }}
     >
       <Sprinkles set="alt" />
