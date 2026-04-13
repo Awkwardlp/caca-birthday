@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navItems = [
-  { name: 'Home',    href: '#home',    sectionId: 'home'    },
-  { name: 'Gift',    href: '#gift',    sectionId: 'gift'    },
-  { name: 'Letter',  href: '#letter',  sectionId: 'letter'  },
-  { name: 'Puzzle',  href: '#puzzle',  sectionId: 'puzzle'  },
+  { name: 'Home', href: '#home', sectionId: 'home' },
+  { name: 'Gift', href: '#gift', sectionId: 'gift' },
+  { name: 'Puzzle', href: '#puzzle', sectionId: 'puzzle' },
+  { name: 'Letter', href: '#letter', sectionId: 'letter' },
   { name: 'Gallery', href: '#gallery', sectionId: 'gallery' },
 ];
 
 const TRANSITION = { duration: 0.5, ease: [0.4, 0, 0.2, 1] };
-const SPRING     = { type: 'spring', stiffness: 380, damping: 30 };
+const SPRING = { type: 'spring', stiffness: 380, damping: 30 };
 
 export default function Navbar() {
-  const [active,  setActive ] = useState('home');
+  const [active, setActive] = useState('home');
   const [isAtTop, setIsAtTop] = useState(true);
 
   /* ── Scroll detection ─────────────────────────────────────────
@@ -105,9 +105,16 @@ export default function Navbar() {
               className="flex items-center justify-center sm:justify-between w-full"
             >
               {/* Logo */}
-              <span className="hidden sm:block text-white font-bold text-sm lg:text-lg uppercase select-none whitespace-nowrap">
-                Maulidiya Salsabila
-              </span>
+              <div className="hidden sm:flex items-center gap-1">
+                <span className="text-white font-playful text-xl lg:text-2xl select-none relative top-[1px]">
+                  20 th
+                </span>
+                <span className="text-white font-bold text-sm lg:text-lg uppercase select-none whitespace-nowrap">
+                  Maulidiya Salsabila
+                </span>
+
+
+              </div>
 
               {/* Menu — text links */}
               <ul className="flex items-center gap-1 sm:gap-2 lg:gap-4">

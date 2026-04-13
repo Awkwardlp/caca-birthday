@@ -185,7 +185,7 @@ export default function Home() {
           </motion.div>
 
           {/* Heading */}
-          <h1 className="text-white text-3d text-6xl md:text-7xl font-black mb-6 leading-tight">
+          <h1 className="text-white text-3d text-7xl md:text-8xl font-black mb-6 leading-tight">
             Happy Birthday<br />{data.name}!
           </h1>
 

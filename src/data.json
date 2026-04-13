@@ -6,15 +6,13 @@
   "musicPath": "romantic-sound.mp3",
   "giftMessage": "Semoga semua yang kamu harapkan tahun ini bisa segera tercapai yaa, aminnn...",
   "letterSender": "anggastwn",
+  "letterPhoto": "gallery/foto17.jpeg",
   "letterContent": [
-    "Dear Jane,",
-    "Happy Birthday!",
-    "On this special day, I wanted to take a moment to tell you how incredibly amazing you are. You bring so much light and joy into the lives of everyone around you.",
-    "I hope your day is filled with as much happiness as you give to others.",
-    "May all your dreams and wishes come true this year.",
-    "With all my love,",
-    "On this special day, I wanted to take a moment to tell you how incredibly amazing you are. You bring so much light and joy into the lives of everyone around you.",
-    "On this special day, I wanted to take a moment to tell you how incredibly amazing you are. You bring so much light and joy into the lives of everyone around you."
+    "to my love",
+    "Happy 20 th sayangkuu. semoga diumur kamu yang genap 20 tahun ini kamu bisa semakin dewasa, semakin tabah, semakin cantikk pintar dan selalu bahagia.",
+    "Aku harap diumur kamu yang bertambah ini kamu bisa semakin bahagia, terlebih bahagia sama aku tapi kalo mau tanpa aku juga gapapaa, kamu berhak dapet kebahagiaan lebih dari aku.",
+    "Selamat ulang tahun my love ratu Maulidiya Salsabila, semoga rasa sayang kamu ke aku gaa akan hilang selamanya, dan kita kelak bisa satu rumah dan punya keluarga kecil yang kita dambakan, love u so much.",
+    "Selamat makin dewasa manusia tercantik didunia!!"
   ],
   "puzzle": {
     "words": [
@@ -59,28 +57,64 @@
   "galleryVideo": "https://youtu.be/fvjO6XmfByg",
   "gallery": [
     {
-      "src": "https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=800&auto=format&fit=crop",
-      "caption": "Tulis ceritamu untuk foto pertama di sini..."
+      "src": "gallery/foto1.jpeg",
+      "caption": "Ini foto bareng pertama kita, masii malu2 xixi..."
     },
     {
-      "src": "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?q=80&w=800&auto=format&fit=crop",
-      "caption": "Momen indah yang tak terlupakan 🌸"
+      "src": "gallery/foto2.png",
+      "caption": "Ini waktu kamu ngasi aku kado secara langsung ❤️ "
     },
     {
-      "src": "https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?q=80&w=800&auto=format&fit=crop",
-      "caption": "Senyum ceria di hari yang spesial."
+      "src": "gallery/foto3.jpeg",
+      "caption": "Waktu kita pertama kali joging bareng."
     },
     {
-      "src": "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=800&auto=format&fit=crop",
-      "caption": "Tawa bahagia yang selalu aku ingat."
+      "src": "gallery/foto4.jpeg",
+      "caption": "Fotbar waktu baru2 main kerumah ayangg."
     },
     {
-      "src": "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?q=80&w=800&auto=format&fit=crop",
-      "caption": "Pemandangan cantik secantik orangnya ✨"
+      "src": "gallery/foto5.jpeg",
+      "caption": "Tak tahuu ini sedang apa kali ahaha..."
     },
     {
-      "src": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop",
-      "caption": "Tulis ceritakan kenangan favoritmu di sini..."
+      "src": "gallery/foto6.jpeg",
+      "caption": "Ini waktu tahun baru, kita main petasan bareng 🌠"
+    },
+    {
+      "src": "gallery/foto7.webp",
+      "caption": "Apaaa yaa? bingung akuu 😭"
+    },
+    {
+      "src": "gallery/foto8.webp",
+      "caption": "Ini waktu di bus mau ke jakartaa 🚌"
+    },
+    {
+      "src": "gallery/foto9.webp",
+      "caption": "Foto dimuseum pas sampai jakartaa."
+    },
+    {
+      "src": "gallery/foto10.jpeg",
+      "caption": "Kenangan photo booth #1"
+    },
+    {
+      "src": "gallery/foto11.jpeg",
+      "caption": "Kenangan photo booth #2"
+    },
+    {
+      "src": "gallery/foto12.jpeg",
+      "caption": "Kenangan photo booth #3"
+    },
+    {
+      "src": "gallery/foto13.jpeg",
+      "caption": "Kenangan photo booth #4"
+    },
+    {
+      "src": "gallery/foto14.jpeg",
+      "caption": "Ini waktu kita sedang kondangan 🌷"
+    },
+    {
+      "src": "gallery/foto15.jpeg",
+      "caption": "Momen ini waktu lagi mantai bareng ayangg 🌊"
     }
   ],
   "heroPhoto": "home-caca.png",

@@ -178,77 +178,198 @@ function EnvelopeScene({ phase, onOpen }) {
   );
 }
 
-/* ── Letter Content ─────────────────────────────────────── */
+/* ── Letter Content (Open Book Layout) ──────────────────── */
 function LetterContent() {
+  const BASE = import.meta.env.BASE_URL;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 60, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ type: 'spring', stiffness: 80, damping: 20 }}
-      className="relative max-w-3xl mx-auto px-6"
+      className="relative max-w-6xl mx-auto px-4"
     >
-      {/* Swaying paper */}
+      {/* ── Book wrapper ── */}
       <motion.div
-        animate={{ rotate: [0, 0.4, -0.4, 0.2, 0] }}
-        transition={{ repeat: Infinity, duration: 8, ease: 'easeInOut' }}
+        animate={{ rotate: [0, 0.3, -0.3, 0.15, 0] }}
+        transition={{ repeat: Infinity, duration: 10, ease: 'easeInOut' }}
         className="relative"
         style={{
-          background: 'linear-gradient(160deg, #fffdf7 0%, #fef6e8 100%)',
-          borderRadius: '12px',
-          boxShadow: '0 32px 64px rgba(0,0,0,0.20), 0 8px 24px rgba(244,114,182,0.12)',
+          background: 'linear-gradient(160deg, #fffdf7 0%, #fef6e8 50%, #fdf2dc 100%)',
+          borderRadius: '14px',
+          boxShadow:
+            '0 32px 64px rgba(0,0,0,0.22), 0 8px 24px rgba(244,114,182,0.12), inset 0 0 80px rgba(0,0,0,0.03)',
+          overflow: 'hidden',
         }}
       >
-        {/* Margin line */}
-        <div className="absolute left-16 top-0 bottom-0 w-px bg-pink-200/60 pointer-events-none" />
-        {/* Ruled lines */}
-        {Array.from({ length: 18 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute left-0 right-0 pointer-events-none"
-            style={{ top: `${56 + i * 42}px`, borderBottom: '1px solid rgba(173,216,230,0.35)' }}
-          />
-        ))}
-        {/* Post-it top-right */}
-        <div className="absolute -top-3 -right-3 w-12 h-12 bg-pink-200/80 shadow-md flex items-center justify-center text-xl"
-          style={{ transform: 'rotate(5deg)', borderRadius: '2px 2px 2px 2px', boxShadow: '2px 4px 10px rgba(0,0,0,0.15)' }}
+        {/* Center spine crease (desktop only) */}
+        <div
+          className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[2px] pointer-events-none z-20"
+          style={{
+            background: 'linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.06) 100%)',
+          }}
+        />
+        {/* Spine shadow left */}
+        <div
+          className="hidden md:block absolute top-0 bottom-0 pointer-events-none z-20"
+          style={{
+            left: 'calc(50% - 20px)',
+            width: '20px',
+            background: 'linear-gradient(to right, transparent, rgba(0,0,0,0.04))',
+          }}
+        />
+        {/* Spine shadow right */}
+        <div
+          className="hidden md:block absolute top-0 bottom-0 pointer-events-none z-20"
+          style={{
+            left: '50%',
+            width: '20px',
+            background: 'linear-gradient(to left, transparent, rgba(0,0,0,0.04))',
+          }}
+        />
+
+        {/* Post-it decoration */}
+        {/* <div
+          className="absolute -top-3 -right-3 w-12 h-12 bg-pink-200/80 shadow-md flex items-center justify-center text-xl z-30"
+          style={{
+            transform: 'rotate(5deg)',
+            borderRadius: '2px',
+            boxShadow: '2px 4px 10px rgba(0,0,0,0.15)',
+          }}
         >
           🩷
-        </div>
+        </div> */}
 
-        {/* Content */}
-        <div className="p-8 md:p-14 pl-20 relative z-10">
-          {data.letterContent.map((paragraph, index) => (
-            <motion.p
-              key={index}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 + index * 0.35, duration: 0.6, ease: 'easeOut' }}
-              className={
-                index === 0
-                  ? 'text-2xl font-black text-pink-400 mb-6'
-                  : 'text-base md:text-lg text-slate-700 leading-loose mb-4'
-              }
+        {/* ── Two-page layout ── */}
+        <div className="flex flex-col md:flex-row">
+          {/* ── LEFT PAGE: Photo ── */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2, duration: 0.7, ease: 'easeOut' }}
+            className="md:w-1/2 relative"
+          >
+            {/* Subtle page texture overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none z-10"
+              style={{
+                background: 'linear-gradient(135deg, rgba(255,253,247,0.3) 0%, transparent 40%, rgba(0,0,0,0.05) 100%)',
+              }}
+            />
+            {/* Photo with decorative border */}
+            <div className="p-6 md:p-8 h-full flex items-center justify-center">
+              <div
+                className="relative w-full overflow-hidden"
+                style={{
+                  borderRadius: '8px',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(244,114,182,0.1)',
+                }}
+              >
+                {/* Decorative tape strips */}
+                <div
+                  className="absolute -top-2 left-1/2 -translate-x-1/2 z-20"
+                  style={{
+                    width: '60px',
+                    height: '22px',
+                    background: 'linear-gradient(135deg, rgba(255,220,180,0.7), rgba(255,200,150,0.5))',
+                    borderRadius: '2px',
+                    transform: 'translateX(-50%) rotate(-2deg)',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                  }}
+                />
+                <img
+                  src={`${BASE}${data.letterPhoto}`}
+                  alt="Special moment"
+                  className="w-full h-full object-cover"
+                  style={{
+                    aspectRatio: '3/4',
+                    borderRadius: '8px',
+                  }}
+                />
+                {/* Photo corner decorations */}
+                {['top-left', 'top-right', 'bottom-left', 'bottom-right'].map((pos) => {
+                  const isTop = pos.includes('top');
+                  const isLeft = pos.includes('left');
+                  return (
+                    <div
+                      key={pos}
+                      className="absolute w-6 h-6 pointer-events-none"
+                      style={{
+                        [isTop ? 'top' : 'bottom']: '4px',
+                        [isLeft ? 'left' : 'right']: '4px',
+                        borderStyle: 'solid',
+                        borderWidth: '2px',
+                        borderColor: 'rgba(244,114,182,0.3)',
+                        borderRadius: '2px',
+                        [isTop ? 'borderBottom' : 'borderTop']: 'none',
+                        [isLeft ? 'borderRight' : 'borderLeft']: 'none',
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* ── RIGHT PAGE: Letter ── */}
+          <div className="md:w-1/2 relative">
+            {/* Margin line */}
+            <div className="absolute left-10 md:left-14 top-0 bottom-0 w-px bg-pink-200/60 pointer-events-none" />
+            {/* Ruled lines */}
+            {Array.from({ length: 22 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute left-0 right-0 pointer-events-none"
+                style={{
+                  top: `${48 + i * 36}px`,
+                  borderBottom: '1px solid rgba(173,216,230,0.35)',
+                }}
+              />
+            ))}
+
+            {/* Letter text content */}
+            <div className="p-6 md:p-10 md:pl-16 relative z-10">
+              {data.letterContent.map((paragraph, index) => (
+                <motion.p
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    delay: 0.2 + index * 0.35,
+                    duration: 0.6,
+                    ease: 'easeOut',
+                  }}
+                  className={
+                    index === 0
+                      ? 'text-4xl md:text-5xl font-black text-pink-400 mb-6 font-playful tracking-wide'
+                      : 'text-sm md:text-base text-slate-700 leading-relaxed md:leading-loose mb-3 md:mb-4'
+                  }
+                >
+                  {paragraph}
+                </motion.p>
+              ))}
+            </div>
+
+            {/* Signature */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.3 + data.letterContent.length * 0.35,
+                duration: 0.7,
+              }}
+              className="px-6 md:px-10 md:pl-16 pb-8 text-right relative z-10"
             >
-              {paragraph}
-            </motion.p>
-          ))}
-        </div>
-
-        {/* Signature */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 + data.letterContent.length * 0.35, duration: 0.7 }}
-          className="px-8 md:px-14 pl-20 pb-10 text-right relative z-10"
-        >
-          <div className="inline-flex items-center gap-2 text-pink-500 font-bold text-lg italic">
-            <Heart className="w-4 h-4 fill-pink-400 text-pink-400 shrink-0" />
-            {data.letterSender}
+              <div className="inline-flex items-center gap-2 text-pink-500 font-playful text-3xl italic">
+                <Heart className="w-3 h-3 fill-pink-400 text-pink-400 shrink-0" />
+                {data.letterSender}
+              </div>
+            </motion.div>
           </div>
-        </motion.div>
+        </div>
       </motion.div>
 
-      {/* Re-read button */}
+      {/* Floating hearts */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -277,15 +398,15 @@ export default function Letter() {
       {/* Floating hearts only on letter phase */}
       {phase === 'letter' && <FloatingHearts />}
 
-      <div className="max-w-4xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <StoryScroll className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-white/25 backdrop-blur-md border border-white/25 rounded-full px-5 py-2 mb-6">
+          {/* <div className="inline-flex items-center gap-2 bg-white/25 backdrop-blur-md border border-white/25 rounded-full px-5 py-2 mb-6">
             <Mail className="w-4 h-4 text-yellow-300" />
             <span className="text-white/80 text-sm font-semibold tracking-wider uppercase">Letter</span>
-          </div>
+          </div> */}
 
-          <h2 className="text-4xl text-3d md:text-5xl font-black text-white drop-shadow-md mb-2">
+          <h2 className="text-4xl md:text-5xl font-black text-white drop-shadow-md mb-2">
             A Letter for You
           </h2>
           {phase === 'letter' && (

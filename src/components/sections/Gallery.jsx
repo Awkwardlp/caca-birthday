@@ -1,6 +1,7 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Camera, Heart, Sparkles } from 'lucide-react';
+import React, { useRef, useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Camera, Heart } from 'lucide-react';
 import data from '../../data.json';
 import Sprinkles from '../Sprinkles';
 
@@ -71,7 +72,7 @@ function StackCard({ src, caption, index }) {
           width: 'min(300px, 75vw)',
           aspectRatio: '3/4',
           perspective: 1200,
-          boxShadow: `0 ${8 + index * 4}px ${28 + index * 8}px rgba(0,0,0,${0.22 + index * 0.04})`,
+          boxShadow: `0 ${8 + index * 4}px ${28 + index * 8}px rgba(0,0,0,${0.05 + index * 0.01})`,
         }}
       >
         <motion.div
@@ -143,8 +144,83 @@ function StackCard({ src, caption, index }) {
   );
 }
 
+/* ─── Side text labels that appear while scrolling gallery ────── */
+function GallerySideText({ visible }) {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 1024);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const textStyle = {
+    fontSize: 'clamp(4rem, 8vw, 7rem)',
+    color: '#ffffff',
+    textShadow: '0 4px 24px rgba(0,0,0,0.4), 0 8px 48px rgba(0,0,0,0.15)',
+    lineHeight: 1,
+  };
+
+  /* Render via portal so fixed positioning isn't affected by parent overflow:clip */
+  return ReactDOM.createPortal(
+    <AnimatePresence>
+      {visible && isDesktop && (
+        <>
+          {/* LEFT — "Happy" */}
+          <motion.div
+            key="side-happy"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            className="fixed pointer-events-none z-[60]"
+            style={{ top: '50%', left: '16%', transform: 'translateY(-50%)' }}
+          >
+            <span className="font-playful select-none" style={textStyle}>
+              Happy
+            </span>
+          </motion.div>
+
+          {/* RIGHT — "20 th" */}
+          <motion.div
+            key="side-20th"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            className="fixed pointer-events-none z-[60]"
+            style={{ top: '50%', right: '16%', transform: 'translateY(-50%)' }}
+          >
+            <span className="font-playful select-none" style={textStyle}>
+              20 th
+            </span>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>,
+    document.body
+  );
+}
+
 /* ─── Gallery section ──────────────────────────────────────────── */
 export default function Gallery() {
+  const stackRef = useRef(null);
+  const [isStackVisible, setIsStackVisible] = useState(false);
+
+  /* Track whether the stacking zone is in viewport */
+  useEffect(() => {
+    const el = stackRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsStackVisible(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
       id="gallery"
@@ -152,6 +228,9 @@ export default function Gallery() {
       style={{ overflowX: 'clip' }}
     >
       <Sprinkles set="alt" />
+
+      {/* Side text decorations */}
+      <GallerySideText visible={isStackVisible} />
 
       {/* ── Header ── */}
       <div className="max-w-6xl mx-auto px-6 pt-25 pb-4 relative z-10">
@@ -162,11 +241,11 @@ export default function Gallery() {
           className="text-center"
           style={{ paddingBottom: CONFIG.HEADER_BOTTOM_GAP }}
         >
-          <div className="inline-flex items-center gap-2 bg-white/25 backdrop-blur-md border border-white/25 rounded-full px-5 py-2 mb-4">
+          {/* <div className="inline-flex items-center gap-2 bg-white/25 backdrop-blur-md border border-white/25 rounded-full px-5 py-2 mb-4">
             <Camera className="w-4 h-4 text-yellow-300" />
             <span className="text-white/80 text-sm font-semibold tracking-wider uppercase">Gallery</span>
-          </div>
-          <h2 className="text-5xl md:text-6xl font-black text-white mb-3 tracking-tight drop-shadow-sm text-3d">
+          </div> */}
+          <h2 className="text-5xl md:text-6xl font-black text-white mb-3 tracking-tight drop-shadow-sm">
             Our Memories
           </h2>
           <p className="text-white/70 text-lg font-medium">
@@ -181,7 +260,7 @@ export default function Gallery() {
        * Sticky cards release when THIS div's bottom exits the viewport.
        * The video must be OUTSIDE this div so cards release before video appears.
        */}
-      <div>
+      <div ref={stackRef}>
         {data.gallery.map((item, index) => (
           <StackCard
             key={index}
@@ -192,65 +271,6 @@ export default function Gallery() {
         ))}
       </div>
       {/* ── END STACKING ZONE ────────────────────────────────────── */}
-
-      {/* ── Cinematic Video Section (outside stacking zone) ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        className="mt-20 max-w-4xl mx-auto px-6 pb-32"
-      >
-        <div className="flex flex-col items-center">
-          <div className="flex items-center gap-4 mb-8">
-            <div className="h-[1px] w-16 md:w-24 bg-gradient-to-r from-transparent to-white/40" />
-            <Sparkles className="w-5 h-5 text-white/90 drop-shadow-sm" />
-            <h3 className="text-2xl md:text-3xl font-serif italic text-white/90 tracking-wide drop-shadow-lg">
-              Moments
-            </h3>
-            <div className="h-[1px] w-16 md:w-24 bg-gradient-to-l from-transparent to-white/40" />
-          </div>
-
-          <div className="relative w-full aspect-video p-3 md:p-5 bg-white/10 backdrop-blur-xl rounded-2xl md:rounded-3xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.3)] group transition-all duration-500 hover:shadow-[0_20px_60px_rgba(244,114,182,0.2)]">
-            <div className="absolute top-0 left-0 w-8 md:w-12 h-8 md:h-12 border-t-2 border-l-2 border-white/60 rounded-tl-[1.2rem] md:rounded-tl-[1.7rem] -translate-x-1 -translate-y-1 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2" />
-            <div className="absolute top-0 right-0 w-8 md:w-12 h-8 md:h-12 border-t-2 border-r-2 border-white/60 rounded-tr-[1.2rem] md:rounded-tr-[1.7rem] translate-x-1 -translate-y-1 transition-transform group-hover:translate-x-2 group-hover:-translate-y-2" />
-            <div className="absolute bottom-0 left-0 w-8 md:w-12 h-8 md:h-12 border-b-2 border-l-2 border-white/60 rounded-bl-[1.2rem] md:rounded-bl-[1.7rem] -translate-x-1 translate-y-1 transition-transform group-hover:-translate-x-2 group-hover:translate-y-2" />
-            <div className="absolute bottom-0 right-0 w-8 md:w-12 h-8 md:h-12 border-b-2 border-r-2 border-white/60 rounded-br-[1.2rem] md:rounded-br-[1.7rem] translate-x-1 translate-y-1 transition-transform group-hover:translate-x-2 group-hover:translate-y-2" />
-
-            <div className="w-full aspect-video rounded-xl overflow-hidden bg-[#111] relative shadow-inner">
-              {data.galleryVideo ? (
-                data.galleryVideo.includes('youtube.com') || data.galleryVideo.includes('youtu.be') ? (
-                  <iframe
-                    className="w-full h-full"
-                    src={
-                      data.galleryVideo.includes('youtu.be')
-                        ? data.galleryVideo.replace('https://youtu.be/', 'https://www.youtube.com/embed/')
-                        : data.galleryVideo.replace('watch?v=', 'embed/')
-                    }
-                    title="YouTube video"
-                    allow="encrypted-media"
-                    allowFullScreen
-                  />
-                ) : (
-                  <video src={data.galleryVideo} controls className="w-full h-full object-cover">
-                    Your browser does not support the video tag.
-                  </video>
-                )
-              ) : (
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-white/50 p-6 text-center border-2 border-dashed border-white/10 rounded-xl m-2 bg-white/5">
-                  <Camera className="w-10 h-10 mb-4 opacity-40" />
-                  <p className="font-serif italic text-lg mb-2">Simpan memori dalam gerak nyata di sini.</p>
-                  <p className="text-xs uppercase tracking-widest opacity-60 mt-1">
-                    Tambahkan video dengan mengisi{' '}
-                    <strong className="text-pink-300">"galleryVideo"</strong> di bagian{' '}
-                    <strong className="text-pink-300">data.json</strong>
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </motion.div>
     </section>
   );
 }

@@ -88,12 +88,11 @@ export default function Puzzle() {
 
         {/* ── Header ── */}
         <StoryScroll className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 bg-white/25 backdrop-blur-md border border-white/25 rounded-full px-5 py-2 mb-6">
-            {/* <Sparkles className="w-4 h-4 text-yellow-300" /> */}
+          {/* <div className="inline-flex items-center gap-2 bg-white/25 backdrop-blur-md border border-white/25 rounded-full px-5 py-2 mb-6">
             <Trophy className="w-4 h-4 text-yellow-300" />
             <span className="text-white/80 text-sm font-semibold tracking-wider uppercase">Puzzle</span>
-          </div>
-          <h2 className="text-4xl text-3d md:text-5xl font-black text-white drop-shadow-lg mb-3">
+          </div> */}
+          <h2 className="text-4xl md:text-5xl font-black text-white drop-shadow-lg mb-3">
             Crossword Puzzle
           </h2>
           <p className="text-white/70 text-lg font-medium">

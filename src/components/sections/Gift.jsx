@@ -153,12 +153,12 @@ export default function Gift() {
         {/* Header */}
         <StoryScroll className="mb-12">
 
-          <div className="inline-flex items-center gap-2 bg-white/25 backdrop-blur-md border border-white/25 rounded-full px-5 py-2 mb-6">
+          {/* <div className="inline-flex items-center gap-2 bg-white/25 backdrop-blur-md border border-white/25 rounded-full px-5 py-2 mb-6">
             <PartyPopper className="w-4 h-4 text-yellow-300" />
             <span className="text-white/80 text-sm font-semibold tracking-wider uppercase">Gift</span>
-          </div>
+          </div> */}
 
-          <h2 className="text-4xl text-3d md:text-5xl font-black text-white drop-shadow-md mb-3">
+          <h2 className="text-4xl md:text-5xl font-black text-white drop-shadow-md mb-3">
             Make a Wish!
           </h2>
           <p className="text-white/70 text-lg">
@@ -202,8 +202,8 @@ export default function Gift() {
               <div className="absolute top-1/2 left-0 w-full flex justify-around opacity-70 px-4 -mt-3">
                 {[...Array(6)].map((_, i) => <div key={i} className="w-5 h-5 rounded-full bg-white shadow-[0_2px_4px_rgba(244,114,182,0.2)]"></div>)}
               </div>
-              <span className="text-pink-400 font-bold text-lg md:text-xl z-10 italic font-serif">
-                Happy Birthday!
+              <span className="text-pink-400 font-bold text-lg md:text-2xl z-10 italic font-serif">
+                20 th
               </span>
             </div>
           </div>
@@ -235,7 +235,7 @@ export default function Gift() {
                 {[...Array(14)].map((_, i) => <div key={i} className="w-4 h-4 rounded-full bg-pink-100/80 shadow-[inset_-2px_-2px_4px_rgba(244,114,182,0.4),0_2px_4px_rgba(0,0,0,0.1)]"></div>)}
               </div>
 
-              <span className="text-pink-400 font-bold text-lg md:text-xl z-10 italic font-serif">
+              <span className="text-pink-400 font-bold text-lg md:text-2xl z-10 italic font-serif">
                 Maulidiya Salsabila ♡
               </span>
             </div>

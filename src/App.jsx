@@ -10,6 +10,7 @@ import Gift from './components/sections/Gift';
 import Letter from './components/sections/Letter';
 import Puzzle from './components/sections/Puzzle';
 import Gallery from './components/sections/Gallery';
+import Moments from './components/sections/Moments';
 import Ending from './components/sections/Ending';
 import data from './data.json';
 
@@ -81,11 +82,13 @@ function App() {
           <WaveDivider />
           <Gift />
           <WaveDivider />
-          <Letter />
-          <WaveDivider flip={true} />
           <Puzzle />
+          <WaveDivider flip={true} />
+          <Letter />
           <WaveDivider />
           <Gallery />
+          <WaveDivider />
+          <Moments />
           <WaveDivider />
           <Ending />
         </main>
