@@ -107,7 +107,7 @@ export default function Navbar() {
               {/* Logo */}
               <div className="hidden sm:flex items-center gap-1">
                 <span className="text-white font-playful text-xl lg:text-2xl select-none relative top-[1px]">
-                  20 th
+                  20th
                 </span>
                 <span className="text-white font-bold text-sm lg:text-lg uppercase select-none whitespace-nowrap">
                   Maulidiya Salsabila

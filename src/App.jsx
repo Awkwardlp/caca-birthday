@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import Intro from './components/Intro';
 import { ReactLenis } from 'lenis/react';
 import Confetti from 'react-confetti';
 import Navbar from './components/Navbar';
@@ -15,14 +17,33 @@ import Ending from './components/sections/Ending';
 import data from './data.json';
 
 function App() {
-  const [showConfetti, setShowConfetti] = useState(true);
+  const [entered, setEntered] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   useEffect(() => {
+    if (!entered) return;
+    setShowConfetti(true);
     const timer = setTimeout(() => setShowConfetti(false), 10000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [entered]);
 
   return (
+    <>
+    {/* ── Intro Screen ── */}
+    <AnimatePresence>
+      {!entered && (
+        <motion.div
+          key="intro"
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Intro onEnter={() => setEntered(true)} />
+        </motion.div>
+      )}
+    </AnimatePresence>
+
+    {/* ── Main Website ── */}
+    {entered && (
     <ReactLenis root options={{
       lerp: 0.06,            // interpolation speed — lower = heavier (default: 0.1)
       wheelMultiplier: 0.4,  // scroll distance per wheel tick — lower = slower
@@ -98,6 +119,8 @@ function App() {
         </footer>
       </div>
     </ReactLenis>
+    )}
+    </>
   );
 }
 
